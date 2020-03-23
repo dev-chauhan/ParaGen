@@ -54,19 +54,5 @@ X_val = process_data(ques_test_x, val_data_len, batch_size, n_words)|>gpu
 Y_val = process_data(ques_test_y, val_data_len, batch_size, n_words)|>gpu
 
 Flux.train!(Flux.params(enc, dec, emb), zip(X_train, Y_train), opt) do x, y
-    # x = emb.(x)
-    # for i in 1:(size(x)[1]-1)
-    #     enc(x[i])
-    # end
-    # enc_x = enc(x[end])
-    # y_ = [y[i] for i in 1:(length(y)-1)]
-    # enc_x_y_ = [[enc_x]; emb.(y_)]
-    # ŷ = [dec(token) for token in enc_x_y_]
-    # l1 = sum(Flux.crossentropy.(map((x)->exp.(x),(ŷ)), y))
-    # println("l1 ", l1)
-    # Flux.reset!(enc)
-    # Flux.reset!(dec)
-
-    # l2 = sum(clamp.(enc_x'enc_y .- sum(enc_x .* enc_y, dims=1)' .+ 1, 0.0, floatmax())) / (size(enc_x)[2] ^ 2)
     return loss(x, y)
 end
